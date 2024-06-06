@@ -7,10 +7,9 @@ export default function BoardScreen() {
 
   const options = [
     { id: '1', title: 'Ver Lista de tareas', screen: 'listatareas' },
-    { id: '2', title: 'Agregar tarea', screen: 'añadirtarea' },
+    { id: '2', title: 'Agregar tarea', screen: 'agregartarea' },
     { id: '3', title: 'Editar tarea', screen: 'editartarea' },
-    { id: '4', title: 'Ver tarea', screen: 'vertarea' },
-    { id: '5', title: 'Configuraciones de la aplicación', screen: 'config' },
+    { id: '4', title: 'Configuraciones de la aplicación', screen: 'config' },
   ];
 
   const renderItem = ({ item }) => (

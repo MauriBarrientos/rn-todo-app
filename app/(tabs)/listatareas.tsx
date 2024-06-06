@@ -15,7 +15,7 @@ export default function TaskListScreen() {
   const renderItem = ({ item }) => (
     <TouchableOpacity 
       style={styles.item}
-      onPress={() => router.push(`/viewtask?id=${item.id}`)}
+      onPress={() => router.push(`/vertarea?id=${item.id}`)}
     >
       <View style={styles.content}>
         <Text style={styles.title}>{item.title}</Text>

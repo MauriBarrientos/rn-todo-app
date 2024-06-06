@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useSearchParams } from 'expo-router';
-import tasks from '../../assets/tasks.json';
+import { useLocalSearchParams } from 'expo-router';
+import tasks from '../../assets/tasks.json';  // Asegúrate de que la ruta del archivo JSON sea correcta
 
-export default function ViewTaskScreen() {
-  const { id } = useSearchParams();
-  const task = tasks.find(t => t.id === parseInt(id));
+export default function VerTarea() {
+  const { id } = useLocalSearchParams(); // Obtiene el ID de los parámetros de la URL
+  const taskId = parseInt(id, 10);
+  const task = tasks.find(t => t.id === taskId);
 
   if (!task) {
     return (
       <View style={styles.container}>
-        <Text>Tarea no encontrada</Text>
+        <Text style={styles.error}>Tarea no encontrada</Text>
       </View>
     );
   }
@@ -43,5 +44,9 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     marginBottom: 10,
+  },
+  error: {
+    fontSize: 18,
+    color: 'red',
   },
 });
