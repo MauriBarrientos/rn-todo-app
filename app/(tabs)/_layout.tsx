@@ -38,7 +38,10 @@ export default function TabLayout() {
         options={{
           title: 'Configuraciones de la aplicación',
       }} />
-      <Stack.Screen name="editartareaform" options={{ title: 'Formulario de Edición' }} />
+      <Stack.Screen
+       name="editartareaform"
+       options={{ title: 'Formulario de Edición'
+       }} />
     </Stack>
   );
 }

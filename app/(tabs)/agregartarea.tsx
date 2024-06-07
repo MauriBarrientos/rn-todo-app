@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import tasks from '../../assets/tasks.json';  // Asegúrate de que la ruta del archivo JSON sea correcta
+import { useRouter } from 'expo-router';
 
-export default function EditTaskFormScreen() {
-  const { id } = useLocalSearchParams();  // Obtiene el ID de los parámetros de la URL
-  const router = useRouter(); 
-  const taskId = parseInt(id, 10);
-  const task = tasks.find(t => t.id === taskId);
+export default function AgregarTarea() {
+  const router = useRouter();
 
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
-  const [author, setAuthor] = useState(task.author);
-  const [date, setDate] = useState(task.date);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [author, setAuthor] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
-  if (!task) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.error}>Tarea no encontrada</Text>
-      </View>
-    );
-  }
+  const handleAgregarTarea = () => {
+    const nuevaTarea = {
+      id: Date.now(),
+      title,
+      description,
+      author,
+      date,
+    };
+
+    // Aquí deberías agregar la lógica para guardar la nueva tarea
+    // Por ejemplo, actualizar el estado de una lista de tareas en el componente padre
+
+    router.push({
+      pathname: "/listatareas",
+      params: { nuevaTarea: JSON.stringify(nuevaTarea) },
+    });
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Editar Tarea</Text>
+      <Text style={styles.header}>Agregar Tarea</Text>
       <Text style={styles.label}>Título</Text>
       <TextInput
         style={styles.input}
@@ -49,9 +55,10 @@ export default function EditTaskFormScreen() {
         value={date}
         onChangeText={setDate}
       />
-      <Button title="Guardar Cambios" onPress={() => {router.push({
-      pathname: "/editartarea",
-    }); }} />
+      <View style={styles.buttonContainer}>
+        <Button title="Cancelar" onPress={() => router.push("/board")} />
+        <Button title="Guardar" onPress={handleAgregarTarea} />
+      </View>
     </View>
   );
 }
@@ -80,9 +87,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingLeft: 8,
   },
-  error: {
-    fontSize: 18,
-    color: 'red',
-    textAlign: 'center',
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
   },
 });

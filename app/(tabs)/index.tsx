@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Button, Card, TextInput } from 'react-native-paper';
 
-const PRESET_USERNAME = 'maurisalina';
-const PRESET_PASSWORD = 'MauriSalina2305';
+const validateEmail = (email) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+};
+
+const validateUsername = (username) => {
+  return username.length >= 5 && username.length <= 10;
+};
+
+const validatePassword = (password) => {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,}$/;
+  return regex.test(password);
+};
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -11,30 +23,89 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    if (username === PRESET_USERNAME && password === PRESET_PASSWORD) {
-      Alert.alert('Logged in successfully');
-      router.push('/board');
+    if (username.includes('@')) {
+      // Validate as email
+      if (!validateEmail(username)) {
+        alert('Formato de correo electrónico inválido');
+        return;
+      }
     } else {
-      Alert.alert('Invalid credentials');
+      // Validate as username
+      if (!validateUsername(username)) {
+        alert('El nombre de usuario debe tener entre 5 y 10 caracteres');
+        return;
+      }
     }
+
+    // Validate password
+    if (!validatePassword(password)) {
+      alert('La contraseña debe tener al menos 5 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un símbolo');
+      return;
+    }
+    router.push('/board');
+  };
+
+  const handleCancel = () => {
+    setUsername('');
+    setPassword('');
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 16 }}
-        onChangeText={setUsername}
-        value={username}
-        placeholder="Username or Email"
-      />
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 16 }}
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Password"
-        secureTextEntry
-      />
-      <Button title="Login" onPress={handleLogin} />
+    <View style={styles.container}>
+      <Card style={styles.card}>
+        <Card.Title title="Inicio de Sesión" />
+        <Card.Content>
+          <TextInput
+            mode='outlined'
+            label="Nombre de usuario o Email"
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Nombre de usuario o Email"
+            style={styles.input}
+          />
+          <TextInput
+            mode='outlined'
+            label="Contraseña"
+            onChangeText={setPassword}
+            value={password}
+            placeholder="Contraseña"
+            secureTextEntry
+            style={styles.input}
+          />
+        </Card.Content>
+        <Card.Actions style={styles.actions}>
+          <Button onPress={handleCancel} mode="outlined" style={styles.button}>
+            Cancelar
+          </Button>
+          <Button onPress={handleLogin} mode="contained" style={styles.button}buttonColor= "#49BA81">
+            Iniciar Sesión
+          </Button>
+        </Card.Actions>
+      </Card>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 16,
+  },
+  card: {
+    width: '100%',
+    maxWidth: 400,
+    padding: 10,
+  },
+  input: {
+    marginVertical: 8,
+  },
+  actions: {
+    justifyContent: 'space-between',
+  },
+  button: {
+    marginHorizontal: 4
+  },
+});
