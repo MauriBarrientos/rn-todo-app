@@ -1,31 +1,47 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { Button } from 'react-native-paper';
-import { useTheme } from '@/context/ThemeContext';
-import { Link } from 'expo-router';
+import React, { useState, useRef } from 'react';
+import { View, Button, StyleSheet, Text } from 'react-native';
+import { useTheme } from '@react-navigation/native';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
+export default function ConfigScreen() {
+  const [darkMode, setDarkMode] = useState(false);
+  const confettiRef = useRef(null);
 
-export default function SettingScreen() {
-  const { theme, toggleTheme } = useTheme();
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const triggerConfetti = () => {
+    if (confettiRef.current) {
+      confettiRef.current.start();
+    }
+  };
+
+  const theme = {
+    dark: darkMode,
+    colors: {
+      background: darkMode ? '#000000' : '#f0f0f0',
+      text: darkMode ? '#ffffff' : '#000000',
+    },
+  };
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.background}]}>
-      <Text style={[styles.title, { color: theme.text }]}>Settings</Text>
-      <Button mode="contained" style={styles.button} onPress={toggleTheme}>
-        Change Theme
-      </Button>
-      <Button mode="contained" style={styles.button}>
-        Change Language
-      </Button>
-      <Link href="/" asChild>
-        <Button mode="contained" style={styles.button}>
-          Go to Home
-        </Button>
-      </Link>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.text, { color: theme.colors.text }]}>
+        {darkMode ? 'Ta oscuro' : 'Ta clarito'}
+      </Text>
+      <Button title="Clickeame" onPress={toggleDarkMode} />
+      <br></br>
+      <Button title="Confetti" onPress={triggerConfetti} />
+      <ConfettiCannon
+        count={200}
+        origin={{ x: -10, y: 0 }}
+        autoStart={false}
+        ref={confettiRef}
+      />
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -34,25 +50,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 28,
+  text: {
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
     marginBottom: 20,
-    textAlign: 'center',
-  },
-  button: {
-    marginTop: 20,
   },
 });

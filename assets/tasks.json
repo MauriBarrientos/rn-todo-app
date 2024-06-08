@@ -1,37 +1,37 @@
 [
     {
       "id": 1,
-      "title": "Tarea 1",
-      "description": "Descripción de la tarea 1",
-      "author": "Autor 1",
-      "date": "2024-06-01"
+      "title": "Estudiar Programación",
+      "description": "Ejes temáticos 1 al 4",
+      "author": "Mauricio",
+      "date": "2024-06-08"
     },
     {
       "id": 2,
-      "title": "Tarea 2",
-      "description": "Descripción de la tarea 2",
-      "author": "Autor 2",
+      "title": "Limpiar la PC",
+      "description": "Limpiar el polvo de la PC",
+      "author": "Mauricio",
       "date": "2024-06-02"
     },
     {
       "id": 3,
-      "title": "Tarea 3",
-      "description": "Descripción de la tarea 3",
-      "author": "Autor 3",
-      "date": "2024-06-03"
+      "title": "Corregir parciales",
+      "description": "Corregir parciales de los alumnos",
+      "author": "Johanna",
+      "date": "2024-04-30"
     },
     {
       "id": 4,
-      "title": "Tarea 4",
-      "description": "Descripción de la tarea 4",
-      "author": "Autor 4",
+      "title": "Sacar la basura",
+      "description": "Sacar la basura de la casa",
+      "author": "Fausto",
       "date": "2024-06-04"
     },
     {
       "id": 5,
-      "title": "Tarea 5",
-      "description": "Descripción de la tarea 5",
-      "author": "Autor 5",
+      "title": "Usar ropa limpia",
+      "description": "Usar ropa limpia para la reunión de trabajo",
+      "author": "Fabián",
       "date": "2024-06-05"
     }
   ]
